@@ -9,8 +9,10 @@ This is a kivy app to learn vocabulary in a foreign language (french is used the
 """
 import kivy
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
@@ -19,6 +21,8 @@ from kivy.lang import Builder
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.logger import Logger
+from kivymd.theming import ThemeManager
+from kivy.uix.togglebutton import ToggleButton
 from random import randint
 from database import DataBase
 
@@ -90,7 +94,9 @@ class VocabWindow(Screen):
     synonym = ObjectProperty(None)
     sentence = ObjectProperty(None)
 
-    # it seems like creating and calling '__init__()' upon the 'StoreData()' call makes us lose the user input before storing data, so I'm not using it an anymore to unpack returns from 'loadVocabList()' and 'getOldWord()'... we just have to call the methods when we're in another method.
+    def __init__(self, **kwargs):
+        super(VocabWindow, self).__init__()
+        # self.add_widget(self.buildToggleBtns()) # relocate these
 
     def loadVocabList(self):
         frenchList = []
@@ -165,6 +171,31 @@ class VocabWindow(Screen):
         self.synonym.text = ""
         self.sentence.text = ""
         sm.current = "vocab"
+
+    def buildToggleBtns(self):
+        layout = GridLayout(cols=4)
+        layout.add_widget(ToggleButton(text="Master", state="down"))
+        layout.add_widget(ToggleButton(text="Expressions"))
+        layout.add_widget(ToggleButton(text="Food"))
+        layout.add_widget(ToggleButton(text="Science"))
+        return layout
+
+
+# class ToggleBtns(ToggleButton, GridLayout):
+#     # while loop based on what the vocab list info
+#     def __init__(self, **kwargs):
+#         super(ToggleBtns, self).__init__()
+#         self.masterToggle = ToggleButton(text="Master", state="down")
+#         self.expressionsToggle = ToggleButton(text="Expressions")
+#         self.foodToggle = ToggleButton(text="Food")
+#         self.scienceToggle = ToggleButton(text="Science")
+    
+#     def build(self):
+#         layout = GridLayout(cols = 4)
+#         layout.add_widget(self.masterToggle)
+#         layout.add_widget(self.expressionsToggle)
+#         layout.add_widget(self.foodToggle)
+#         layout.add_widget(self.scienceToggle)
 
 
 class QuizWindow(Screen):
@@ -245,6 +276,7 @@ sm.current = "options"
 
 class VocabApp(App):
     def build(self):
+        # theme_cls = ThemeManager()
         return sm
 
 

@@ -213,6 +213,22 @@ WindowManager:
         cols: 2
 
         Label:
+            text: "Choose vocab list to add to:"
+
+        GridLayout:
+            cols: 4 # total number of lists
+            ToggleButton:
+                text: "Master"
+                state: "down"
+                # background_color: [1, 0, 0, 1]
+            ToggleButton:
+                text: "Expressions"
+            ToggleButton:
+                text: "Food"
+            ToggleButton:
+                text: "Science"
+
+        Label:
             text: "French Word (use the article if applicable): "
 
         TextInput:
