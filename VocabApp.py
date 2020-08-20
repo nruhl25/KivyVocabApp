@@ -181,23 +181,6 @@ class VocabWindow(Screen):
         return layout
 
 
-# class ToggleBtns(ToggleButton, GridLayout):
-#     # while loop based on what the vocab list info
-#     def __init__(self, **kwargs):
-#         super(ToggleBtns, self).__init__()
-#         self.masterToggle = ToggleButton(text="Master", state="down")
-#         self.expressionsToggle = ToggleButton(text="Expressions")
-#         self.foodToggle = ToggleButton(text="Food")
-#         self.scienceToggle = ToggleButton(text="Science")
-    
-#     def build(self):
-#         layout = GridLayout(cols = 4)
-#         layout.add_widget(self.masterToggle)
-#         layout.add_widget(self.expressionsToggle)
-#         layout.add_widget(self.foodToggle)
-#         layout.add_widget(self.scienceToggle)
-
-
 class QuizWindow(Screen):
     frenchWordInput = ObjectProperty(None)
     englishQuizWord = StringProperty("")
