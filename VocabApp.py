@@ -96,7 +96,7 @@ class VocabWindow(Screen):
 
     def __init__(self, **kwargs):
         super(VocabWindow, self).__init__()
-        # self.add_widget(self.buildToggleBtns()) # relocate these
+        # self.add_widget(self.buildToggleBtns())
 
     def loadVocabList(self):
         frenchList = []
@@ -133,37 +133,47 @@ class VocabWindow(Screen):
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
 
-        if (frenchOldWord == self.frenchWord.text.lower().strip()):
-            buttonOverWrite = Button(text="Overwrite existing entry?", size_hint=(None, None), size=(200, 200))
-            # buttonIgnore = Button(text="Discard pending entry", size_hint=(None, None), size=(100, 100))
-            pop1 = Popup(title='Word already exists!', content=buttonOverWrite, size_hint=(None, None), size=(400, 400))
-            buttonOverWrite.bind(on_release=lambda x: self.storeDataOverWrite())
-            buttonOverWrite.bind(on_press=pop1.dismiss)
-            # buttonIgnore.bind(on_release=pop1.dismiss)
-            pop1.open()
-            return
-        else:
-            f = open("vocabListApp.txt", "a+")
-            f.write("\n" + self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip())
-            f.close()
-            pop2 = Popup(title='Word successfully entered!', size_hint=(None, None), size=(400, 400))
-            pop2.open()
-            self.reset()
-            return
+        vocabListNames = []
+        # assuming all are toggled as of now
+        toggleDownList = [self.ids.masterToggle, self.ids.expressionToggle, self.ids.foodToggle, self.ids.scienceToggle]
+        for i, toggle in enumerate(toggleDownList):
+            vocabListNames.append(toggle.text + "List.txt")
+        vocabListNames[0] = "vocabListApp.txt" # curent full list is not called master
+
+        for list in vocabListNames:
+            filename = str(list)
+            if (frenchOldWord == self.frenchWord.text.lower().strip()):
+                buttonOverWrite = Button(text="Overwrite existing entry?", size_hint=(None, None), size=(200, 200))
+                # buttonIgnore = Button(text="Discard pending entry", size_hint=(None, None), size=(100, 100))
+                pop1 = Popup(title='Word already exists!', content=buttonOverWrite, size_hint=(None, None), size=(400, 400))
+                buttonOverWrite.bind(on_release=lambda x: self.storeDataOverWrite())
+                buttonOverWrite.bind(on_press=pop1.dismiss)
+                # buttonIgnore.bind(on_release=pop1.dismiss)
+                pop1.open()
+                return
+            else:
+                f = open(filename, "a+")
+                f.write("\n" + self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip())
+                f.close()
+                pop2 = Popup(title='Word successfully entered!', size_hint=(None, None), size=(400, 400))
+                pop2.open()
+                self.reset()
+                return
 
     def storeDataOverWrite(self):
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
-
-        with open("vocabListApp.txt", "w+") as f:
+        filename = "%s" %list ## This is not working anymore!!
+        with open(filename, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
                     f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
                 else:
                     f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
-        pop = Popup(title='Word entry overwritten!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
+        pop = Popup(title='Word entry overwritten in ' + filename + '!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
         pop.open()
+        return
 
     def reset(self):
         self.frenchWord.text = ""
@@ -172,6 +182,7 @@ class VocabWindow(Screen):
         self.sentence.text = ""
         sm.current = "vocab"
 
+    # not doing it this way at the moment... doing it in the kv file
     def buildToggleBtns(self):
         layout = GridLayout(cols=4)
         layout.add_widget(ToggleButton(text="Master", state="down"))

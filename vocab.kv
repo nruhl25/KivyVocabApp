@@ -218,14 +218,19 @@ WindowManager:
         GridLayout:
             cols: 4 # total number of lists
             ToggleButton:
+                id: masterToggle
                 text: "Master"
                 state: "down"
                 # background_color: [1, 0, 0, 1]
+                # is it possible to give this a permanent state?
             ToggleButton:
+                id: expressionToggle
                 text: "Expressions"
             ToggleButton:
+                id: foodToggle
                 text: "Food"
             ToggleButton:
+                id: scienceToggle
                 text: "Science"
 
         Label:
@@ -243,7 +248,6 @@ WindowManager:
             multiline: False
 
         Label:
-            id: synonym
             text: "French Synonym: "
 
         TextInput:
