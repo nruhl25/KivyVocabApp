@@ -90,11 +90,7 @@ class VocabWindow(Screen):
     synonym = ObjectProperty(None)
     sentence = ObjectProperty(None)
 
-    # def __init__(self, **kwargs):
-    #     super(VocabWindow, self).__init__()
-    #     self.frenchVocabList, self.englishDefinitionList, self.synonymList, self.sentenceList, self.totalWords = self.loadVocabList()
-    #     self.frenchOldWord, self.englishOldWord, self.synonymOld, self.sentenceOld, self.oldLocation = self.getOldWord()
-    #     # it seems like initializing makes us lose the user input before storing data
+    # it seems like creating and calling '__init__()' upon the 'StoreData()' call makes us lose the user input before storing data, so I'm not using it an anymore to unpack returns from 'loadVocabList()' and 'getOldWord()'... we just have to call the methods when we're in another method.
 
     def loadVocabList(self):
         frenchList = []
@@ -154,11 +150,10 @@ class VocabWindow(Screen):
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
 
-        with open("newVocabListApp.txt", "w+") as f:
+        with open("vocabListApp.txt", "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
-                    ## never get here!
-                    f.write("\n" + self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + self.sentence.text.lower().strip())
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
                 else:
                     f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
         pop = Popup(title='Word entry overwritten!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())

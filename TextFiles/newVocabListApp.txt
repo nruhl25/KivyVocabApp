@@ -9,4 +9,5 @@ le chembardement &&& the upheaval &&& le bouleversement &&& C'est le chembardeme
 époustouflant &&& mind-blowing &&& incroyable &&& Il fait du vélo tellement vite, c'est époustouflant!
 tasser &&& to pack, compress &&& comprimer &&& il tasse la terre au pied de l'arbre.
 vexer &&& to affend &&& toucher la susceptibilité &&& tu m'as vexé quand tu as dit que je suis gros devant tout le monde.
-bonjour &&& d &&& dd
+bonjour &&& hello &&& salut &&& bonjour, mon ami!
+tenir au courant &&& to keep up to date &&& mettre à jour &&& je te tiendrai au courant du progrès de mon projet.
