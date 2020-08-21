@@ -128,14 +128,18 @@ class VocabWindow(Screen):
         sm.current = "login"
 
     def storeData(self):
+        # This initial check is not working
+        if(any([self.frenchWord.text, self.englishWord.text, self.synonym.text, self.sentence.text]) == None):
+            invalidForm()
+            return
         # I may eventually need to add an if statement for the first time creating the file -- no carriage return / one for each user / begin file with comment line description.
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
 
         vocabListNames = []
-        # assuming all are toggled as of now
-        toggleDownList = [self.ids.masterToggle, self.ids.expressionToggle, self.ids.foodToggle, self.ids.scienceToggle]
+        # assuming only master is toggled
+        toggleDownList = [self.ids.masterToggle] #, self.ids.expressionToggle, self.ids.foodToggle, self.ids.scienceToggle]
         for i, toggle in enumerate(toggleDownList):
             vocabListNames.append(toggle.text + "List.txt")
         vocabListNames[0] = "vocabListApp.txt" # curent full list is not called master
@@ -164,7 +168,7 @@ class VocabWindow(Screen):
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
-        filename = "%s" %list ## This is not working anymore!!
+        filename = "%s" %list ## This is not working... thinks its a class object!!
         with open(filename, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
@@ -228,8 +232,9 @@ class QuizWindow(Screen):
         pop.open()
 
     def hintSentence(self):
-        # This will require a more robust algorithm for pronoun contractions and verb conjugations.
-        hintSentence = self.sentenceQuiz.replace(self.frenchQuizWord, '[****]')
+        # test.py contains a possible improvement for strComp()
+        # hintSentence = self.sentenceQuiz.replace(self.frenchQuizWord, '[****]')
+        hintSentence = sentenceHide(self.sentenceQuiz, self.frenchQuizWord)
         pop = Popup(title='Synonym', content=Label(text=hintSentence), size_hint=(None, None), size=(400, 400))
         pop.open()
 
@@ -256,6 +261,38 @@ def invalidForm():
     pop = Popup(title='Invalid Form', content=Label(text='Please fill in all inputs with valid information.'), size_hint = (None, None), size = (400, 400))
     pop.open()
 
+
+def sentenceHide(sentence, vocabWord):
+    a = sentence.split(' ')
+    if(vocabWord[0:2] == 'se'):
+        vocabWord = vocabWord.replace(vocabWord[0:3], '')
+    for word in a:
+        word.lower()
+        diff = 0
+        if (len(word) <= 3):
+            continue
+        lastLetter = word[len(word)-1]
+        punctuation = ''
+        if any([lastLetter == '.', lastLetter == ',', lastLetter == ';', lastLetter == '!', lastLetter == '!']):
+            punctuation = lastLetter
+            diff = -1
+        if (("'" == word[1]) and (word[2:4] == vocabWord[0:2])):
+            shorter = word if len(word) <= (len(vocabWord)-2) else vocabWord
+            diff += sum([vocabWord[i] != word[2+i]
+                         for i in range(len(shorter)-2)])
+            if(diff <= 2):
+                return sentence.replace(word, '[****]' + punctuation)
+            else:
+                continue
+        else:
+            shorter = word if len(word) <= len(vocabWord) else vocabWord
+            diff += sum([vocabWord[i] != word[i] for i in range(len(shorter))])
+            if(diff <= 2):
+                return sentence.replace(word, '[****]' + punctuation)
+            else:
+                continue
+    return sentence
+
 kv = Builder.load_file("vocab.kv")
 
 sm = WindowManager()
@@ -272,7 +309,6 @@ class VocabApp(App):
     def build(self):
         # theme_cls = ThemeManager()
         return sm
-
 
 if __name__ == "__main__":
     VocabApp().run()

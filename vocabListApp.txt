@@ -13,3 +13,5 @@ bonjour &&& hello &&& salut &&& bonjour, mon ami!
 tenir au courant &&& to keep up to date &&& mettre à jour &&& je te tiendrai au courant du progrès de mon projet.
 à rebours &&& backwards, in reverse &&& à l'envers &&& pour le lancement de la fusée, les techniciens effectuent un compte à rebours (countdown).
 tordre &&& to twist, to wring &&& --- &&& il me fait mail quand tu me tords le bras
+couiner &&& to whine &&& pousser des petits cris &&& tu couinais tout le soir, c'était dommage.
+un charnier &&& a mass grave &&& --- &&& les nazis ont utilisé des charniers pendant la shoah.

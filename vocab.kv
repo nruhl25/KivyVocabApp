@@ -147,7 +147,7 @@ WindowManager:
 
         Label:
             text: "Welcome to the Vocab-Learner-2000! Choose an option below:"
-            text_size: self.size
+            font_size: (root.width + root.height) / 60
             halign: "center"
             valign: "middle"
             pos_hint: {"x":0.3, "top":0.9}
@@ -241,21 +241,21 @@ WindowManager:
             multiline: False
 
         Label:
-            text: "English Definition (match the article): "
+            text: "English Definition (match the article, '--' if NA): "
 
         TextInput:
             id: englishWord
             multiline: False
 
         Label:
-            text: "French Synonym: "
+            text: "French Synonym of explanation ('--' if NA): "
 
         TextInput:
             id: synonym
             multiline: False
 
         Label:
-            text: "French Sentence: "
+            text: "French Sentence ('--' if NA): "
 
         TextInput:
             id: sentence
