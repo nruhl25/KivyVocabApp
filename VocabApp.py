@@ -8,6 +8,8 @@ Created on Wed Aug 12 15:45:47 2020
 This is a kivy app to learn vocabulary in a foreign language (french is used the development).
 """
 import kivy
+import pandas as pd
+import numpy as np
 from kivy.app import App
 from kivymd.app import MDApp
 from kivy.uix.label import Label
@@ -26,6 +28,7 @@ from kivy.uix.togglebutton import ToggleButton
 from random import randint
 from database import DataBase
 
+FileForOverWrite = '' # global scope
 
 class WindowManager(ScreenManager):
     pass
@@ -128,54 +131,67 @@ class VocabWindow(Screen):
         sm.current = "login"
 
     def storeData(self):
-        # This initial check is not working
-        if(any([self.frenchWord.text, self.englishWord.text, self.synonym.text, self.sentence.text]) == None):
+        global FileForOverWrite ## global variable
+        if(any([self.frenchWord.text==None, self.englishWord.text==None, self.synonym.text==None, self.sentence.text==None])):
             invalidForm()
             return
-        # I may eventually need to add an if statement for the first time creating the file -- no carriage return / one for each user / begin file with comment line description.
+        # I may eventually need to add an if statement for the first time creating the file -- one for each user / begin file with comment line description.
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
 
-        vocabListNames = []
-        # assuming only master is toggled
-        toggleDownList = [self.ids.masterToggle] #, self.ids.expressionToggle, self.ids.foodToggle, self.ids.scienceToggle]
-        for i, toggle in enumerate(toggleDownList):
-            vocabListNames.append(toggle.text + "List.txt")
-        vocabListNames[0] = "vocabListApp.txt" # curent full list is not called master
+        frenchVocabList.append(self.frenchWord.text.lower().strip())
+        englishDefinitionList.append(self.englishWord.text.lower().strip())
+        synonymList.append(self.synonym.text.lower().strip())
+        sentenceList.append(self.sentence.text.lower().strip())
 
-        for list in vocabListNames:
-            filename = str(list)
+        toggleDownList = []
+        # is there a cleaner way to do this with a list?
+        if self.ids.masterToggle.state == 'down':
+            toggleDownList.append(self.ids.masterToggle.text)
+        if self.ids.foodToggle.state == 'down':
+            toggleDownList.append(self.ids.foodToggle.text)
+        if self.ids.expressionToggle.state == 'down':
+            toggleDownList.append(self.ids.expressionToggle.text)
+        if self.ids.scienceToggle.state == 'down':
+            toggleDownList.append(self.ids.scienceToggle.text)
+
+        vocabListNames = []
+        if toggleDownList:  # if not empty
+            for Toggle in toggleDownList:
+                vocabListNames.append(Toggle + "List.txt")
             if (frenchOldWord == self.frenchWord.text.lower().strip()):
+                FileForOverWrite = vocabListNames[0] # only overwriting in master
                 buttonOverWrite = Button(text="Overwrite existing entry?", size_hint=(None, None), size=(200, 200))
-                # buttonIgnore = Button(text="Discard pending entry", size_hint=(None, None), size=(100, 100))
                 pop1 = Popup(title='Word already exists!', content=buttonOverWrite, size_hint=(None, None), size=(400, 400))
                 buttonOverWrite.bind(on_release=lambda x: self.storeDataOverWrite())
                 buttonOverWrite.bind(on_press=pop1.dismiss)
-                # buttonIgnore.bind(on_release=pop1.dismiss)
                 pop1.open()
                 return
             else:
-                f = open(filename, "a+")
-                f.write("\n" + self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip())
-                f.close()
+                for filename in vocabListNames:
+                    f = open(filename, "a+")
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
+                    f.close()
                 pop2 = Popup(title='Word successfully entered!', size_hint=(None, None), size=(400, 400))
                 pop2.open()
                 self.reset()
                 return
+        else:
+            noToggleError()
+            return
 
     def storeDataOverWrite(self):
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
-        filename = "%s" %list ## This is not working... thinks its a class object!!
-        with open(filename, "w+") as f:
+        with open(FileForOverWrite, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
                     f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
                 else:
                     f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
-        pop = Popup(title='Word entry overwritten in ' + filename + '!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
+        pop = Popup(title='Word entry overwritten in the Master List!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
         pop.open()
         return
 
@@ -184,6 +200,10 @@ class VocabWindow(Screen):
         self.englishWord.text = ""
         self.synonym.text = ""
         self.sentence.text = ""
+        self.ids.masterToggle.state = "down"
+        self.ids.expressionToggle.state = "normal"
+        self.ids.foodToggle.state = "normal"
+        self.ids.scienceToggle.state = "normal"
         sm.current = "vocab"
 
     # not doing it this way at the moment... doing it in the kv file
@@ -259,6 +279,11 @@ def invalidLogin():
 
 def invalidForm():
     pop = Popup(title='Invalid Form', content=Label(text='Please fill in all inputs with valid information.'), size_hint = (None, None), size = (400, 400))
+    pop.open()
+
+
+def noToggleError():
+    pop = Popup(title='Invalid Entry', content=Label(text="Plese select at least the 'Master' toggle"), size_hint=(None, None), size=(400, 400))
     pop.open()
 
 
