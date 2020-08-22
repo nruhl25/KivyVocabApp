@@ -106,7 +106,7 @@ class VocabWindow(Screen):
         englishList = []
         synonymList = []
         sentenceList = []
-        with open("vocabListApp.txt", "r") as f:
+        with open("MasterList.txt", "r") as f:
             line = f.readline()
             totalWords = 1
             while line:
@@ -230,7 +230,7 @@ class QuizWindow(Screen):
         englishList = []
         synonymList = []
         sentenceList = []
-        with open("vocabListApp.txt", "r") as f:
+        with open("MasterList.txt", "r") as f:
             line = f.readline()
             totalWords = 1
             while line:
