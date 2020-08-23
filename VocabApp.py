@@ -106,6 +106,7 @@ class VocabWindow(Screen):
         englishList = []
         synonymList = []
         sentenceList = []
+        successList = []
         with open("MasterList.txt", "r") as f:
             line = f.readline()
             totalWords = 1
@@ -115,17 +116,19 @@ class VocabWindow(Screen):
                 englishList.append(entry[1])
                 synonymList.append(entry[2])
                 sentenceList.append(entry[3])
+                successList.append(entry[4])
                 line = f.readline()
-        return frenchList, englishList, synonymList, sentenceList, totalWords
+                totalWords += 1
+        return frenchList, englishList, synonymList, sentenceList, successList, totalWords
 
     def getOldWord(self):
         location = None
-        frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
+        frenchVocabList, englishDefinitionList, synonymList, sentenceList, successList, totalWords = self.loadVocabList()
         for indx, word in enumerate(frenchVocabList):
             if (word == self.frenchWord.text.lower().strip()):
                 location = indx
-                return frenchVocabList[indx], englishDefinitionList[indx], synonymList[indx], sentenceList[indx], location
-        return None, None, None, None, location
+                return frenchVocabList[indx], englishDefinitionList[indx], synonymList[indx], sentenceList[indx], successList[indx], location
+        return None, None, None, None, None, location
 
     def logOut(self):
         sm.current = "login"
@@ -138,7 +141,7 @@ class VocabWindow(Screen):
         # I may eventually need to add an if statement for the first time creating the file -- one for each user / begin file with comment line description.
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
-        frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
+        frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldSuccess, oldLocation = self.getOldWord()
 
         frenchVocabList.append(self.frenchWord.text.lower().strip())
         englishDefinitionList.append(self.englishWord.text.lower().strip())
@@ -171,7 +174,7 @@ class VocabWindow(Screen):
             else:
                 for filename in vocabListNames:
                     f = open(filename, "a+")
-                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "0" + "\n")
                     f.close()
                 pop2 = Popup(title='Word successfully entered!', size_hint=(None, None), size=(400, 400))
                 pop2.open()
@@ -184,11 +187,11 @@ class VocabWindow(Screen):
     def storeDataOverWrite(self):
         frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
 
-        frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldLocation = self.getOldWord()
+        frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldSuccess, oldLocation = self.getOldWord()
         with open(FileForOverWrite, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
-                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "\n")
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "0" + "\n")
                 else:
                     f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
         pop = Popup(title='Word entry overwritten in the Master List!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
@@ -219,17 +222,20 @@ class VocabWindow(Screen):
 class QuizWindow(Screen):
     frenchWordInput = ObjectProperty(None)
     englishQuizWord = StringProperty("")
+    numSuccess = StringProperty("")
 
     def __init__(self, **kwargs):
         super(QuizWindow, self).__init__()
-        self.frenchVocabList, self.englishDefinitionList, self.synonymList, self.sentenceList, self.totalWords = self.loadVocabList()
-        self.frenchQuizWord, self.englishQuizWord, self.synonymQuiz, self.sentenceQuiz = self.getQuizWord()
+        self.frenchVocabList, self.englishDefinitionList, self.synonymList, self.sentenceList, self.successList, self.totalWords = self.loadVocabList()
+        self.indx = randint(0, len(self.frenchVocabList)-1)
+        self.frenchQuizWord, self.englishQuizWord, self.synonymQuiz, self.sentenceQuiz, self.numSuccess = self.getQuizWord()
 
     def loadVocabList(self):
         frenchList = []
         englishList = []
         synonymList = []
         sentenceList = []
+        successList = []
         with open("MasterList.txt", "r") as f:
             line = f.readline()
             totalWords = 1
@@ -239,13 +245,13 @@ class QuizWindow(Screen):
                 englishList.append(entry[1])
                 synonymList.append(entry[2])
                 sentenceList.append(entry[3])
+                successList.append(entry[4])
                 line = f.readline()
                 totalWords += 1
-        return frenchList, englishList, synonymList, sentenceList, totalWords
+        return frenchList, englishList, synonymList, sentenceList, successList, totalWords
     
     def getQuizWord(self):
-        indx = randint(0, len(self.frenchVocabList)-1)
-        return self.frenchVocabList[indx], self.englishDefinitionList[indx], self.synonymList[indx], self.sentenceList[indx]
+        return self.frenchVocabList[self.indx], self.englishDefinitionList[self.indx], self.synonymList[self.indx], self.sentenceList[self.indx], self.successList[self.indx]
 
     def hintSynonym(self):
         pop = Popup(title='Synonym', content=Label(text=self.synonymQuiz), size_hint=(None, None), size=(400, 400))
@@ -265,6 +271,21 @@ class QuizWindow(Screen):
         else: # give them 3 tries before showing answer/next word/extra try for misspelling ?
             pop = Popup(title='Incorrect', content=Label(text='The correct answer is "' + self.frenchQuizWord + '".'), size_hint=(None, None), size=(400, 400))
             pop.open()
+
+    def archiveWord(self):
+        with open('ArchivedWords.txt', 'a+') as fa:
+            fa.write(self.frenchQuizWord + " &&& " + self.englishQuizWord + " &&& " + self.synonymQuiz + " &&& " + self.sentenceQuiz + " &&& " + self.numSuccess)
+        del self.frenchVocabList[self.indx]
+        del self.englishDefinitionList[self.indx]
+        del self.synonymList[self.indx]
+        del self.sentenceList[self.indx]
+        del self.successList[self.indx]
+        with open("MasterList.txt", "w+") as fm:
+            for line in range(len(self.frenchVocabList)):
+                fm.write(self.frenchVocabList[line] + " &&& " + self.englishDefinitionList[line] + " &&& " + self.synonymList[line] + " &&& " + self.sentenceList[line] + " &&& " + self.successList[line])
+        pop = Popup(title='Word successfully archived.', content=Label(text="You're getting smarter!"), size_hint=(None, None), size=(400, 400))
+        pop.open()
+        return
 
     def reset(self):
         self.frenchWordInput.text = ""
@@ -289,10 +310,15 @@ def noToggleError():
 
 def sentenceHide(sentence, vocabWord):
     a = sentence.split(' ')
-    if(vocabWord[0:2] == 'se' or vocabWord[0:2] == 'un' or vocabWord[0:2] == 'le' or vocabWord[0:2] == 'la' or vocabWord[0:2] == 'de'):
+    # remove french specific articles
+    if(vocabWord[0:3] == 'se ' or vocabWord[0:2] == 'un ' or vocabWord[0:3] == 'le ' or vocabWord[0:3] == 'la ' or vocabWord[0:3] == 'de '):
         vocabWord = vocabWord.replace(vocabWord[0:3], '')
-    elif(vocabWord[0:3] == 'une' or vocabWord[0:3] == 'les' or vocabWord[0:3] == 'des'):
+    elif(vocabWord[0:4] == 'une ' or vocabWord[0:4] == 'les ' or vocabWord[0:4] == 'des '):
         vocabWord = vocabWord.replace(vocabWord[0:4], '')
+    elif(vocabWord[len(vocabWord)-3:len(vocabWord)] == ' de'):
+        vocabWord = vocabWord.replace(vocabWord[len(vocabWord)-3:len(vocabWord)], '')
+    elif(vocabWord[len(vocabWord)-2:len(vocabWord)] == ' à'):
+        vocabWord = vocabWord.replace(vocabWord[len(vocabWord)-2:len(vocabWord)], '')
     for word in a:
         word.lower()
         diff = 0

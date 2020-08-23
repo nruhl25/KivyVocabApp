@@ -282,14 +282,14 @@ WindowManager:
 
         Label:
             text: "Quiz: Enter the French equivalent."
-            pos_hint: {"x":0.3, "y":0.8}
+            pos_hint: {"x":0.3, "y":0.85}
             size_hint: 0.4, 0.2
             font_size: (root.width + root.height) / 50
 
         Label:
-            text: root.englishQuizWord # access StringProperty('') here, or method
-            font_size: (root.width + root.height) / 60
-            pos_hint: {"x":0.3, "y":0.6}
+            text: root.englishQuizWord # access StringProperty('') here
+            font_size: (root.width + root.height) / 55
+            pos_hint: {"x":0.3, "y":0.75}
             size_hint: 0.4, 0.2
 
         TextInput:
@@ -314,6 +314,21 @@ WindowManager:
             font_size: (root.width + root.height) / 80
             on_release:
                 root.hintSentence()
+
+        Label:
+            text: "Number of Successes: " + root.numSuccess
+            font_size: (root.width + root.height) / 90
+            pos_hint: {"x":0.3, "y":0.62}
+            size_hint: 0.4, 0.2
+
+        Button:
+            text: "Archive this word?"
+            pos_hint: {"x": 0.4, "y":0.65}
+            size_hint: 0.2, 0.05
+            font_size: (root.width + root.height) / 90
+            on_release:
+                root.archiveWord()
+                root.reset()
 
         Button:
             text: "Submit"

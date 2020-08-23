@@ -1,25 +1,22 @@
-brédouille &&& empty-handed &&& raté la tache &&& il est revenu de la boulangerie bredouille, sans pain.
-brédouiller &&& to mumble &&& balbutier &&& l'homme brédouille devant la femme qu'il aime.
-pêter les plombs &&& to blow a fuse &&& craquer psycholigiquement &&& Si mon bébé ne dort pas ce soir, je pêterai les plombs.
-frotter &&& to scrub &&& gratter &&& je frotte dans la douche afin de bien nettoyer.
-une lacune &&& a shortcoming &&& une manque &&& Au début, on ne savait pas qu'il avait des lacunes.
-convenu &&& agreed &&& d'accord &&& c'est pas ce qu'on a convenu.
-assaillir &&& to overwhelm &&& déborder, accabler &&& Tous mes devoirs m'assaillis parfois.
-le chembardement &&& the upheaval &&& le bouleversement &&& c'est le chembardement aujourd'hui.
-époustouflant &&& mind-blowing &&& incroyable &&& il fait du vélo tellement vite, c'est époustouflant!
-tasser &&& to pack, compress &&& comprimer &&& il tasse la terre au pied de l'arbre.
-vexer &&& to affend &&& toucher la susceptibilité &&& tu m'as vexé quand tu as dit que je suis gros devant tout le monde.
-bonjour &&& salut &&& salut &&& bonjour, mes amis!
-tenir au courant &&& to keep up to date &&& mettre à jour &&& je te tiendrai au courant du progrès de mon projet.
-à rebours &&& backwards, in reverse &&& à l'envers &&& pour le lancement de la fusée, les techniciens effectuent un compte à rebours (countdown).
-tordre &&& to twist, to wring &&& --- &&& il me fait mail quand tu me tords le bras
-couiner &&& to whine &&& pousser des petits cris &&& tu couinais tout le soir, c'était dommage.
-un charnier &&& a mass grave &&& --- &&& les nazis ont utilisé des charniers pendant la shoah.
-les moeurs &&& the customs &&& les traditions &&& selon les moeurs de notre réligion, on doit prier 5 fois chaque jour.
-incontournable &&& must see, can't miss &&& incroyable &&& c'est un coin du pays incontournable
-le boulot &&& the work &&& le travail &&& métro, boulot, dodo
-fastueuex &&& sumptuous &&& luxeux &&& c'est un répas fastueux
-s'écarter &&& to leave the norm &&& écarter des´expectations traditionelles &&& je m'écartes en pourtant des vêtements 'hypster'.
-la torpeur &&& the sleepines &&& la fatigue &&& oh la torpeur ! je pourrais m'endormir ici et maintenant.
-un phare &&& a car headlight &&& lumière de voiture &&& attention de baisser les phares dans le brouillard épais.
-s'accroupir &&& to squat, crouch &&& se pencher (avec les jambes) &&& je m'accroupi pour ramasser mes cléfs que j'ai fait tomber.
+brédouille &&& empty-handed &&& raté la tache &&& il est revenu de la boulangerie bredouille, sans pain. &&& 4
+pêter les plombs &&& to blow a fuse &&& craquer psycholigiquement &&& Si mon bébé ne dort pas ce soir, je pêterai les plombs. &&& 4
+frotter &&& to scrub &&& gratter &&& je frotte dans la douche afin de bien nettoyer. &&& 4
+une lacune &&& a shortcoming &&& une manque &&& Au début, on ne savait pas qu'il avait des lacunes. &&& 4
+convenu &&& agreed &&& d'accord &&& c'est pas ce qu'on a convenu. &&& 4
+assaillir &&& to overwhelm &&& déborder, accabler &&& Tous mes devoirs m'assaillis parfois. &&& 4
+le chembardement &&& the upheaval &&& le bouleversement &&& c'est le chembardement aujourd'hui. &&& 4
+époustouflant &&& mind-blowing &&& incroyable &&& il fait du vélo tellement vite, c'est époustouflant! &&& 4
+tasser &&& to pack, compress &&& comprimer &&& il tasse la terre au pied de l'arbre. &&& 4
+vexer &&& to affend &&& toucher la susceptibilité &&& tu m'as vexé quand tu as dit que je suis gros devant tout le monde. &&& 4
+tenir au courant &&& to keep up to date &&& mettre à jour &&& je te tiendrai au courant du progrès de mon projet. &&& 4
+à rebours &&& backwards, in reverse &&& à l'envers &&& pour le lancement de la fusée, les techniciens effectuent un compte à rebours (countdown). &&& 4
+tordre &&& to twist, to wring &&& --- &&& il me fait mail quand tu me tords le bras &&& 4
+couiner &&& to whine &&& pousser des petits cris &&& tu couinais tout le soir, c'était dommage. &&& 4
+incontournable &&& must see, can't miss &&& incroyable &&& c'est un coin du pays incontournable &&& 4
+le boulot &&& the work &&& le travail &&& métro, boulot, dodo &&& 4
+fastueuex &&& sumptuous &&& luxeux &&& c'est un répas fastueux &&& 4
+s'écarter &&& to leave the norm &&& écarter des´expectations traditionelles &&& je m'écartes en pourtant des vêtements 'hypster'. &&& 4
+la torpeur &&& the sleepines &&& la fatigue &&& oh la torpeur ! je pourrais m'endormir ici et maintenant. &&& 4
+un phare &&& a car headlight &&& lumière de voiture &&& attention de baisser les phares dans le brouillard épais. &&& 4
+s'accroupir &&& to squat, crouch &&& se pencher (avec les jambes) &&& je m'accroupi pour ramasser mes cléfs que j'ai fait tomber. &&& 4
+venir de &&& just ... &&& -- &&& je viens de partir &&& 4
