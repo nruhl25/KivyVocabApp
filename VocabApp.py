@@ -289,8 +289,10 @@ def noToggleError():
 
 def sentenceHide(sentence, vocabWord):
     a = sentence.split(' ')
-    if(vocabWord[0:2] == 'se'):
+    if(vocabWord[0:2] == 'se' or vocabWord[0:2] == 'un' or vocabWord[0:2] == 'le' or vocabWord[0:2] == 'la' or vocabWord[0:2] == 'de'):
         vocabWord = vocabWord.replace(vocabWord[0:3], '')
+    elif(vocabWord[0:3] == 'une' or vocabWord[0:3] == 'les' or vocabWord[0:3] == 'des'):
+        vocabWord = vocabWord.replace(vocabWord[0:4], '')
     for word in a:
         word.lower()
         diff = 0
