@@ -139,7 +139,7 @@ class VocabWindow(Screen):
             invalidForm()
             return
         # I may eventually need to add an if statement for the first time creating the file -- one for each user / begin file with comment line description.
-        frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
+        frenchVocabList, englishDefinitionList, synonymList, sentenceList, successList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldSuccess, oldLocation = self.getOldWord()
 
@@ -149,7 +149,7 @@ class VocabWindow(Screen):
         sentenceList.append(self.sentence.text.lower().strip())
 
         toggleDownList = []
-        # is there a cleaner way to do this with a list?
+        # is there a cleaner way to do this with list comprehension?
         if self.ids.masterToggle.state == 'down':
             toggleDownList.append(self.ids.masterToggle.text)
         if self.ids.foodToggle.state == 'down':
