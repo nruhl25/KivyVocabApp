@@ -18,7 +18,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty, NumericProperty
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -164,7 +164,7 @@ class VocabWindow(Screen):
             for Toggle in toggleDownList:
                 vocabListNames.append(Toggle + "List.txt")
             if (frenchOldWord == self.frenchWord.text.lower().strip()):
-                FileForOverWrite = vocabListNames[0] # only overwriting in master
+                FileForOverWrite = vocabListNames[0] # only overwriting in master as of now
                 buttonOverWrite = Button(text="Overwrite existing entry?", size_hint=(None, None), size=(200, 200))
                 pop1 = Popup(title='Word already exists!', content=buttonOverWrite, size_hint=(None, None), size=(400, 400))
                 buttonOverWrite.bind(on_release=lambda x: self.storeDataOverWrite())
@@ -174,7 +174,7 @@ class VocabWindow(Screen):
             else:
                 for filename in vocabListNames:
                     f = open(filename, "a+")
-                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "0" + "\n")
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + " &&& " + "0" + "\n")
                     f.close()
                 pop2 = Popup(title='Word successfully entered!', size_hint=(None, None), size=(400, 400))
                 pop2.open()
@@ -191,7 +191,8 @@ class VocabWindow(Screen):
         with open(FileForOverWrite, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
-                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " + self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + "0" + "\n")
+                    f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " +
+                            self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + " &&& " + self.numSuccess + "\n")
                 else:
                     f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
         pop = Popup(title='Word entry overwritten in the Master List!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
@@ -222,7 +223,7 @@ class VocabWindow(Screen):
 class QuizWindow(Screen):
     frenchWordInput = ObjectProperty(None)
     englishQuizWord = StringProperty("")
-    numSuccess = StringProperty("")
+    numSuccess = NumericProperty(None)
 
     def __init__(self, **kwargs):
         super(QuizWindow, self).__init__()
@@ -251,7 +252,7 @@ class QuizWindow(Screen):
         return frenchList, englishList, synonymList, sentenceList, successList, totalWords
     
     def getQuizWord(self):
-        return self.frenchVocabList[self.indx], self.englishDefinitionList[self.indx], self.synonymList[self.indx], self.sentenceList[self.indx], self.successList[self.indx]
+        return self.frenchVocabList[self.indx], self.englishDefinitionList[self.indx], self.synonymList[self.indx], self.sentenceList[self.indx], int(self.successList[self.indx])
 
     def hintSynonym(self):
         pop = Popup(title='Synonym', content=Label(text=self.synonymQuiz), size_hint=(None, None), size=(400, 400))
@@ -259,18 +260,29 @@ class QuizWindow(Screen):
 
     def hintSentence(self):
         # test.py contains a possible improvement for strComp()
-        # hintSentence = self.sentenceQuiz.replace(self.frenchQuizWord, '[****]')
         hintSentence = sentenceHide(self.sentenceQuiz, self.frenchQuizWord)
         pop = Popup(title='Synonym', content=Label(text=hintSentence), size_hint=(None, None), size=(400, 400))
         pop.open()
 
     def verifyEntry(self):
         if (self.frenchQuizWord.lower()==self.frenchWordInput.text.lower()):
-           pop = Popup(title='Correct!', size_hint=(None, None), size=(400, 400))
-           pop.open()
+            self.numSuccess += 1
+            self.storeEntry()
+            pop = Popup(title='Correct!', size_hint=(None, None), size=(400, 400))
+            pop.open()
         else: # give them 3 tries before showing answer/next word/extra try for misspelling ?
             pop = Popup(title='Incorrect', content=Label(text='The correct answer is "' + self.frenchQuizWord + '".'), size_hint=(None, None), size=(400, 400))
             pop.open()
+
+    def storeEntry(self):
+        ## This needs logic to replace the entry not only in the master list, but also the others
+        with open("MasterList.txt", "w+") as f:
+            for line in range(len(self.frenchVocabList)):
+                if (line == self.indx):
+                    f.write(self.frenchQuizWord + " &&& " + self.englishQuizWord + " &&& " + self.synonymQuiz + " &&& " + self.sentenceQuiz + " &&& " + str(int(self.numSuccess)) + "\n")
+                else:
+                    f.write(self.frenchVocabList[line] + " &&& " + self.englishDefinitionList[line] + " &&& " + self.synonymList[line] + " &&& " + self.sentenceList[line] + " &&& " + str(int(self.successList[line])) + "\n")
+        return
 
     def archiveWord(self):
         with open('ArchivedWords.txt', 'a+') as fa:
