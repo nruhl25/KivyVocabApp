@@ -1,11 +1,11 @@
-brédouille &&& empty-handed &&& raté la tache &&& il est revenu de la boulangerie bredouille, sans pain. &&& 2
+brédouille &&& empty-handed &&& raté la tache &&& il est revenu de la boulangerie bredouille, sans pain. &&& 3
 pêter les plombs &&& to blow a fuse &&& craquer psycholigiquement &&& Si mon bébé ne dort pas ce soir, je pêterai les plombs. &&& 2
 frotter &&& to scrub &&& gratter &&& je frotte dans la douche afin de bien nettoyer. &&& 2
 une lacune &&& a shortcoming &&& une manque &&& Au début, on ne savait pas qu'il avait des lacunes. &&& 2
 convenu &&& agreed &&& d'accord &&& c'est pas ce qu'on a convenu. &&& 2
 assaillir &&& to overwhelm &&& déborder, accabler &&& Tous mes devoirs m'assaillis parfois. &&& 2
 le chembardement &&& the upheaval &&& le bouleversement &&& c'est le chembardement aujourd'hui. &&& 2
-époustouflant &&& mind-blowing &&& incroyable &&& il fait du vélo tellement vite, c'est époustouflant! &&& 2
+époustouflant &&& mind-blowing &&& incroyable &&& il fait du vélo tellement vite, c'est époustouflant! &&& 3
 tasser &&& to pack, compress &&& comprimer &&& il tasse la terre au pied de l'arbre. &&& 2
 vexer &&& to affend &&& toucher la susceptibilité &&& tu m'as vexé quand tu as dit que je suis gros devant tout le monde. &&& 2
 tenir au courant &&& to keep up to date &&& mettre à jour &&& je te tiendrai au courant du progrès de mon projet. &&& 2
@@ -15,9 +15,17 @@ couiner &&& to whine &&& pousser des petits cris &&& tu couinais tout le soir, c
 incontournable &&& must see, can't miss &&& incroyable &&& c'est un coin du pays incontournable &&& 2
 le boulot &&& the work &&& le travail &&& métro, boulot, dodo &&& 2
 fastueuex &&& sumptuous &&& luxeux &&& c'est un répas fastueux &&& 3
-s'écarter &&& to leave the norm &&& écarter des´expectations traditionelles &&& je m'écartes en pourtant des vêtements 'hypster'. &&& 2
+s'écarter &&& to leave the norm &&& écarter des´expectations traditionelles &&& je m'écartes en pourtant des vêtements 'hypster'. &&& 3
 la torpeur &&& the sleepines &&& la fatigue &&& oh la torpeur ! je pourrais m'endormir ici et maintenant. &&& 2
-un phare &&& a car headlight &&& lumière de voiture &&& attention de baisser les phares dans le brouillard épais. &&& 2
+un phare &&& a car headlight &&& lumière de voiture &&& attention de baisser les phares dans le brouillard épais. &&& 3
 s'accroupir &&& to squat, crouch &&& se pencher (avec les jambes) &&& je m'accroupi pour ramasser mes cléfs que j'ai fait tomber. &&& 2
 venir de &&& just ... &&& -- &&& je viens de partir &&& 2
 la physique fondementale &&& theoretical physics &&& la physique théoretique &&& on a embauché un professeur qui recherche la physique fondementale &&& 2
+un ratissage &&& a thorough search &&& recherche minutieuse &&& les policiers ont effectué un ratissage de la maison du voleur. &&& 2
+assomer &&& to knock out; to bore &&& frapper d'un coup violent; ennuyer &&& j'ai assommer l'audience pendant ma longue et ennuyeuse présentation. &&& 1
+désemparer &&& to confuse, disorient, leave helpless &&& confondre; désorienter &&& les violents attaques vérbales le désemparent &&& 0
+licencier &&& to dismiss, fire &&& renvoyer, limoger &&& la direction a licencié 4 employés accusé de vol. &&& 0
+croquer la vie a pleines dents &&& to live life to the fullest. &&& vie la meilleure vie que tu peut. prends des risques! &&& vas-y! ne sois pas timide. croque la vie  pleine dents. &&& 0
+une perruque &&& a wig &&& cheveux artificiels &&& le vieil homme porte une perrque pour cacher son calvitie. &&& 1
+bouchonner &&& to come to a standstill, form a bottleneck &&& circulation : être encombrée &&& je vais partir tôt avant que ça bouchonne à l'entrée de la ville. &&& 1
+une moquette &&& a carpet (full room) &&& un tapis &&& dans l'appartement de ma soeur, il y a une moquette dans la chambre à coucher, mais un tapis dans le salon. &&& 0
