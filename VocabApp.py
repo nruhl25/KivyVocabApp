@@ -5,7 +5,7 @@ Created on Wed Aug 12 15:45:47 2020
 
 @author: nathanielruhl
 
-This is a kivy app to learn vocabulary in a foreign language (french is used the development).
+This is a kivy app to learn vocabulary in a foreign language (french is used in the development).
 """
 import kivy
 import pandas as pd
@@ -27,8 +27,6 @@ from kivymd.theming import ThemeManager
 from kivy.uix.togglebutton import ToggleButton
 from random import randint
 from database import DataBase
-
-FileForOverWrite = '' # global scope
 
 class WindowManager(ScreenManager):
     pass
@@ -99,6 +97,8 @@ class VocabWindow(Screen):
 
     def __init__(self, **kwargs):
         super(VocabWindow, self).__init__()
+        self.FileForOverWrite = ''
+        ## Load vocab list here as attribute
         # self.add_widget(self.buildToggleBtns())
 
     def loadVocabList(self):
@@ -134,7 +134,7 @@ class VocabWindow(Screen):
         sm.current = "login"
 
     def storeData(self):
-        global FileForOverWrite ## global variable
+
         if(any([self.frenchWord.text==None, self.englishWord.text==None, self.synonym.text==None, self.sentence.text==None])):
             invalidForm()
             return
@@ -164,12 +164,13 @@ class VocabWindow(Screen):
             for Toggle in toggleDownList:
                 vocabListNames.append(Toggle + "List.txt")
             if (frenchOldWord == self.frenchWord.text.lower().strip()):
-                FileForOverWrite = vocabListNames[0] # only overwriting in master as of now
+                self.FileForOverWrite = vocabListNames[0] # only overwriting in master as of now
                 buttonOverWrite = Button(text="Overwrite existing entry?", size_hint=(None, None), size=(200, 200))
                 pop1 = Popup(title='Word already exists!', content=buttonOverWrite, size_hint=(None, None), size=(400, 400))
                 buttonOverWrite.bind(on_release=lambda x: self.storeDataOverWrite())
                 buttonOverWrite.bind(on_press=pop1.dismiss)
                 pop1.open()
+                self.reset()
                 return
             else:
                 for filename in vocabListNames:
@@ -185,16 +186,17 @@ class VocabWindow(Screen):
             return
 
     def storeDataOverWrite(self):
-        frenchVocabList, englishDefinitionList, synonymList, sentenceList, totalWords = self.loadVocabList()
+        frenchVocabList, englishDefinitionList, synonymList, sentenceList, successList, totalWords = self.loadVocabList()
 
         frenchOldWord, englishOldWord, synonymOld, sentenceOld, oldSuccess, oldLocation = self.getOldWord()
-        with open(FileForOverWrite, "w+") as f:
+        with open(self.FileForOverWrite, "w+") as f:
             for line in range(len(frenchVocabList)):
                 if (line == oldLocation):
                     f.write(self.frenchWord.text.lower().strip() + " &&& " + self.englishWord.text.lower().strip() + " &&& " +
-                            self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + " &&& " + self.numSuccess + "\n")
+                            self.synonym.text.lower().strip() + " &&& " + self.sentence.text.lower().strip() + " &&& " + "0" + "\n")
                 else:
-                    f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " + synonymList[line] + " &&& " + sentenceList[line])
+                    f.write(frenchVocabList[line] + " &&& " + englishDefinitionList[line] + " &&& " +
+                            synonymList[line] + " &&& " + sentenceList[line] + " &&& " + str(int(successList[line])) + "\n")
         pop = Popup(title='Word entry overwritten in the Master List!', size_hint=(None, None), size=(400, 400), on_open=lambda x: self.reset())
         pop.open()
         return
