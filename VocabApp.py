@@ -226,12 +226,25 @@ class QuizWindow(Screen):
     frenchWordInput = ObjectProperty(None)
     englishQuizWord = StringProperty("")
     numSuccess = NumericProperty(None)
+    totalWords = NumericProperty(None)
+    totalArchivedWords = NumericProperty(None)
 
     def __init__(self, **kwargs):
         super(QuizWindow, self).__init__()
         self.frenchVocabList, self.englishDefinitionList, self.synonymList, self.sentenceList, self.successList, self.totalWords = self.loadVocabList()
         self.indx = randint(0, len(self.frenchVocabList)-1)
         self.frenchQuizWord, self.englishQuizWord, self.synonymQuiz, self.sentenceQuiz, self.numSuccess = self.getQuizWord()
+        self.totalArchivedWords = self.loadArchivedList()
+
+    def loadArchivedList(self):
+        with open("ArchivedWords.txt", "r") as f:
+            line = f.readline()
+            archivedWords = 1
+            while line:
+                archivedWords += 1
+                line = f.readline()
+            archivedWords -= 1
+        return archivedWords
 
     def loadVocabList(self):
         frenchList = []
@@ -251,6 +264,7 @@ class QuizWindow(Screen):
                 successList.append(entry[4])
                 line = f.readline()
                 totalWords += 1
+            totalWords -= 1
         return frenchList, englishList, synonymList, sentenceList, successList, totalWords
     
     def getQuizWord(self):

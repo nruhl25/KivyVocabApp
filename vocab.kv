@@ -301,7 +301,7 @@ WindowManager:
 
         Button:
             text: "Hint: synonym"
-            pos_hint: {"x": 0.05 , "y":0.6}
+            pos_hint: {"x": 0.05 , "y": 0.6}
             size_hint: 0.2, 0.15
             font_size: (root.width + root.height) / 80
             on_release:
@@ -309,7 +309,7 @@ WindowManager:
 
         Button:
             text: "Hint: sentence"
-            pos_hint: {"x": 0.75 , "y":0.6}
+            pos_hint: {"x": 0.75 , "y": 0.6}
             size_hint: 0.2, 0.15
             font_size: (root.width + root.height) / 80
             on_release:
@@ -348,3 +348,15 @@ WindowManager:
             on_release:
                 app.root.current = "options"
                 root.manager.transition.direction = "right"
+        
+        Label:
+            text: "Words in Master List: " + str(root.totalWords)
+            font_size: (root.width + root.height) / 90
+            pos_hint: {"x":0.6, "y":0.07}
+            size_hint: 0.4, 0.2
+
+        Label:
+            text: "Words in Archived List: " + str(root.totalArchivedWords)
+            font_size: (root.width + root.height) / 90
+            pos_hint: {"x":0.6, "y":0.03}
+            size_hint: 0.4, 0.2
